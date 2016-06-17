@@ -13,8 +13,12 @@ public class NotificationHandler : MonoBehaviour {
 	private string message = null;
 	private string oldMessage = null;
 	private string oldIcon = null;
-	private Dictionary<string,ArrayList> notifications = new Dictionary<string,ArrayList>();
 
+	/**
+	 * 
+	 * Handles notifications from notification bar
+	 * 
+	 * */
 	void Start () { 
 		
 		using(AndroidJavaClass activityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer")) {
@@ -33,6 +37,11 @@ public class NotificationHandler : MonoBehaviour {
 		}
 	} 
 
+	/**
+	 * 
+	 * Shows the notification on the GUI
+	 * 
+	 * */
 	void OnGUI(){
 		if (message != null && icon != null && !message.Equals(oldMessage) && !icon.Equals(oldIcon)) {
 			iconTexture = (Texture2D)Resources.Load (icon) as Texture2D;
@@ -43,17 +52,24 @@ public class NotificationHandler : MonoBehaviour {
 		}
 	}
 
+	/**
+	 * 
+	 * Sets the icon of the notification 
+	 * 
+	 * */
 	void setIcon (string icon){
 		this.oldIcon = this.icon;
 		this.icon = icon;
 	}
 
+	/**
+	 * 
+	 * Sets the content message of the notification 
+	 * 
+	 * */
 	void setMessage (string message){
 		this.oldMessage = this.message;
 		this.message = message;
 	}
-
-	public Dictionary<string,ArrayList> getNotifications(){
-		return this.notifications;
-	}
+	
 }

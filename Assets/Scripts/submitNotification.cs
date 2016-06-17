@@ -7,6 +7,13 @@ public class submitNotification : MonoBehaviour {
 	private AndroidJavaObject notificationHandler = null;
 	private AndroidJavaObject activityContext = null;
 
+	/**
+	 * 
+	 * Handles the click on "Submit notifications" button
+	 * It dispose all the previous submitted notifications and
+	 * send new ones
+	 *	
+	 * */
 	public void onSubmitClick(){
 		this.disposeNotifications ();
 		this.sendNotifications ();
@@ -15,6 +22,11 @@ public class submitNotification : MonoBehaviour {
 		}));
 	}
 
+	/**
+	 * 
+	 * Handles the click on "Dispose notifications" button
+	 * 
+	 * */
 	public void onRemoveClick(){
 		this.disposeNotifications ();
 		activityContext.Call("runOnUiThread", new AndroidJavaRunnable(() => {
@@ -22,6 +34,11 @@ public class submitNotification : MonoBehaviour {
 		}));
 	}
 
+	/**
+	 * 
+	 * Handles the click on single notification dispose button
+	 * 
+	 * */
 	public void onSingleRemoveClick(string id){
 		this.disposeNotification (id);
 		activityContext.Call("runOnUiThread", new AndroidJavaRunnable(() => {
@@ -29,6 +46,11 @@ public class submitNotification : MonoBehaviour {
 		}));
 	}
 
+	/**
+	 * 
+	 * Sends the requested notifications to the android plugin
+	 * 
+	 * */
 	private void sendNotifications(){		
 		Dictionary<string,ArrayList> notifications = DataHandler.getInstance ().getNotifications ();
 		using (AndroidJavaClass activityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer")) {
@@ -49,6 +71,11 @@ public class submitNotification : MonoBehaviour {
 		}		
 	}
 
+	/**
+	 * 
+	 * Sends a dispose request for all the notifications to the android plugin
+	 * 
+	 * */
 	private void disposeNotifications(){
 		Dictionary<string,ArrayList> notifications = DataHandler.getInstance ().getNotifications ();
 		using (AndroidJavaClass activityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer")) {
@@ -68,6 +95,11 @@ public class submitNotification : MonoBehaviour {
 		}
 	}
 
+	/**
+	 * 
+	 * Sends a dispose request to the android plugin for a single notification
+	 * 
+	 * */
 	private void disposeNotification(string id){
 		using (AndroidJavaClass activityClass = new AndroidJavaClass ("com.unity3d.player.UnityPlayer")) {
 			activityContext = activityClass.GetStatic<AndroidJavaObject> ("currentActivity");

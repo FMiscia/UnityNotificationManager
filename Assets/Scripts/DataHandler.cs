@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/**
+ * Data Collector
+ * */
 public class DataHandler  {
 
 	private static DataHandler _instance = null;
