@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class submitNotification : MonoBehaviour {
+public class NotificationScheduler : MonoBehaviour {
 
 	private AndroidJavaObject notificationHandler = null;
 	private AndroidJavaObject activityContext = null;
@@ -67,7 +67,7 @@ public class submitNotification : MonoBehaviour {
 		notificationHandler.Call("setContext", activityContext);
 		int delayCounter = 0;
 		foreach (ArrayList notification in notifications.Values) {
-			notificationHandler.Call("submitNotification",notification[0],notification[1],notification[2],notification[3],10*1000*delayCounter++);
+			notificationHandler.Call("submitNotification",notification[0],notification[1],notification[2],notification[3],60*1000*delayCounter++);
 		}		
 	}
 
