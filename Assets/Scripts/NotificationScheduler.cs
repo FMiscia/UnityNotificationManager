@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -17,6 +18,12 @@ public class NotificationScheduler : MonoBehaviour {
 	public void onSubmitClick(){
 		this.disposeNotifications ();
 		this.sendNotifications ();
+		DataHandler.getInstance ().setIcon (null);
+		DataHandler.getInstance ().setMessage (null);
+		((Button)GameObject.Find ("Button_Remove").GetComponent<Button>()).interactable = true;
+		Button[] singleButtons = GameObject.Find ("bottomPanel").GetComponentsInChildren<Button>(true);
+		foreach (Button button in singleButtons)
+			button.interactable = true;
 		activityContext.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 			notificationHandler.Call("showMessage", "Notifications submitted");
 		}));
@@ -29,6 +36,12 @@ public class NotificationScheduler : MonoBehaviour {
 	 * */
 	public void onRemoveClick(){
 		this.disposeNotifications ();
+		DataHandler.getInstance ().setIcon (null);
+		DataHandler.getInstance ().setMessage (null);
+		((Button)GameObject.Find ("Button_Remove").GetComponent<Button>()).interactable = false;
+		Button[] singleButtons = GameObject.Find ("bottomPanel").GetComponentsInChildren<Button>(true);
+		foreach (Button button in singleButtons)
+			button.interactable = false;
 		activityContext.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 			notificationHandler.Call("showMessage", "Notifications disposed");
 		}));
@@ -41,6 +54,8 @@ public class NotificationScheduler : MonoBehaviour {
 	 * */
 	public void onSingleRemoveClick(string id){
 		this.disposeNotification (id);
+		ArrayList buttonData = DataHandler.getInstance ().getNotifications ()[id];
+		((Button)GameObject.Find ((string)buttonData[3]).GetComponent<Button>()).interactable = false;
 		activityContext.Call("runOnUiThread", new AndroidJavaRunnable(() => {
 			notificationHandler.Call("showMessage", "beer "+id+" disposed");
 		}));
