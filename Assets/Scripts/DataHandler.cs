@@ -16,6 +16,7 @@ public class DataHandler  {
 	private string oldMessage = null;
 	private string oldIcon = null;
 
+
 	private DataHandler(){
 		if (notifications.Count == 0) {
 			notifications.Add ("1", new ArrayList (new string[]{ "1", "First", "First Beer", "beer1" }));
